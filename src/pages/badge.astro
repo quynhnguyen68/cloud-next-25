@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<script>
+function drawImageCover(canvas, image) {
+    const ctx = canvas.getContext('2d');
+
+    // Calculate the scale to fit the image to the canvas
+    const scale = Math.max(canvas.width / image.width, canvas.height / image.height);
+
+    // Calculate the new dimensions of the image
+    const scaledWidth = image.width * scale;
+    const scaledHeight = image.height * scale;
+
+    // Calculate the position to center the image
+    const x = (canvas.width - scaledWidth) / 2;
+    const y = (canvas.height - scaledHeight) / 2;
+
+    // Draw the image onto the canvas
+    ctx.drawImage(image, x, y, scaledWidth, scaledHeight);
+}
+
+function init() {
+    const btnUpload = document.querySelector('.btn-upload');
+    const btnDownload = document.querySelector('.btn-download');
+    const btnReset = document.querySelector('.btn-reset');
+    const fileInput = document.querySelector('#fileUpload');
+    const frameList = document.querySelector('.frame-list');
+    const avatarFrames = document.querySelectorAll('.frame-option');
+
+    const canvas = document.getElementById('canvas');
+    const photoCanvas = document.getElementById('photoCanvas');
+    const ctx = canvas.getContext('2d');   
+    const photoCtx = photoCanvas.getContext('2d');
+    let selectedFrameSrc = '';
+
+    const frame = new Image();
+    frame.src = avatarFrames[0].src;
+    selectedFrameSrc = avatarFrames[0].src;
+
+    frame.onload = () => {
+        drawImageCover(canvas, frame);
+    }
+
+    btnUpload.onclick = function() {
+        fileInput.click();
+    }
+    
+    fileInput.onchange = function(event) {
+        const frame = new Image();
+        frame.src = URL.createObjectURL(event.target.files[0]);
+
+        frame.onload = () => {
+            photoCtx.clearRect(0, 0, photoCanvas.width, photoCanvas.height);
+            drawImageCover(photoCanvas, frame);
+            btnDownload.classList.remove('hidden');
+        }
+    }
+
+    avatarFrames.forEach((avatarFrame) => {
+        avatarFrame.addEventListener('click', () => {
+            const currentSelected = document.querySelector('.frame-option-selected');
+            currentSelected.classList.remove('frame-option-selected');
+            avatarFrame.classList.add('frame-option-selected');
+
+            const frame = new Image();
+            frame.src = avatarFrame.src;
+            selectedFrameSrc = avatarFrame.src;
+
+            frame.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawImageCover(canvas, frame);
+            }
+        });
+    });
+
+    btnDownload.onclick = function() {
+        const frame = new Image();
+        frame.src = selectedFrameSrc;
+
+        frame.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawImageCover(photoCanvas, frame);
+
+            const link = document.createElement('a');
+            link.download = 'devfest-avatar.png';
+            link.href = photoCanvas.toDataURL('image/png');
+            link.click();
+
+            btnReset.classList.remove('hidden');    
+            btnUpload.classList.add('hidden');
+            frameList.classList.add('pointer-events-none');
+        }
+    }
+
+    btnReset.onclick = function() {
+        btnUpload.classList.remove('hidden');
+        btnDownload.classList.add('hidden');
+        btnReset.classList.add('hidden');
+        frameList.classList.remove('pointer-events-none');
+
+        photoCtx.clearRect(0, 0, photoCanvas.width, photoCanvas.height);
+
+        const frame = new Image();
+        frame.src = selectedFrameSrc;
+
+        frame.onload = () => {
+            drawImageCover(canvas, frame);
+        }
+    }
+}
+
+document.addEventListener("astro:after-swap", init);
+init();
+</script>
+
+<Layout title="Claim badge">
+    <main>
+        <div class="badge-container container grid items-center gap-8 p-8 pt-20 xl:pt-0">
+            <div class="box-frame p-8 bg-white">
+                <h1 class="text-4xl font-bold">Badge</h1>
+
+                <p class="mb-4">Create your own badge with different styles.</p>
+
+                <label class="font-bold mt-8">Choose your style:</label>
+                <ul class="frame-list flex gap-2 mb-8 mt-2">
+                    <li><img class="frame-option md:h-24 md:w-24 h-14 w-14 frame-option-selected" src="/image/avatar-frame/frame1.png" /></li>
+                    <li><img class="frame-option md:h-24 md:w-24 h-14 w-14" src="/image/avatar-frame/frame2.png" /></li>
+                    <li><img class="frame-option md:h-24 md:w-24 h-14 w-14" src="/image/avatar-frame/frame3.png" /></li>
+                    <li><img class="frame-option md:h-24 md:w-24 h-14 w-14" src="/image/avatar-frame/frame4.png" /></li>
+                </ul>
+
+                <input type="file" accept="image/*" name="image" id="fileUpload" class="hidden">
+
+                <button class="btn-primary btn-upload">
+                    <span class="front front-upload">Upload</span>
+                </button>
+
+                <button class="btn-primary btn-reset hidden">
+                    <span class="front front-reset">Reset</span>
+                </button>
+
+                <button class="ml-4 btn-primary btn-download hidden">
+                    <span class="front front-download">Download</span>
+                </button>
+
+            </div>
+
+            <div class="canvas-wrap border-2 border-black relative">
+                <canvas id="canvas" width="1000" height="1000" style="width: 100%" class="absolute"></canvas>
+                <canvas id="photoCanvas" width="1000" height="1000" style="width: 100%"></canvas>
+            </div>
+        </div>    
+    </main>
+</Layout>
+
+<style scoped>
+    main {
+        background: white;
+    }
+
+    .badge-container {
+        grid-template-columns: 1fr auto;
+        min-height: calc(100vh - 80px);
+    }
+    
+    .frame-option {
+        border: 1px solid lightgrey;
+    }
+
+    .frame-option:hover {
+        border-color: black;
+    }
+    .frame-option-selected {
+        border-width: 2px;
+        border-color: black;
+    }
+
+    .btn-upload, .btn-download, .btn-reset {
+		text-decoration: none;
+		width: fit-content;
+		background: black;
+	}
+
+  	.front {
+    	display: block;
+		border: 2px solid black;
+		border-radius: 40px;
+		padding: 10px 20px;
+		width: fit-content;
+    	transform: translateY(-8px);
+  	}
+
+    .front-upload {
+        background: var(--color-light-blue);
+    }
+
+    .front-download {
+        background: var(--color-light-pink);
+    }
+
+    .front-reset {
+        background: var(--color-light-green);
+    }
+
+  	.btn-primary:hover .front {
+    	transform: translateY(-2px);
+  	}
+
+    .canvas-wrap {
+        width: 100%;
+        height: 100%;
+        max-width: 460px;
+        max-height: 460px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .badge-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

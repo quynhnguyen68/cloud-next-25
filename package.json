@@ -1,5 +1,6 @@
 {
-  "name": "my-astro-project",
+  "name": "cloud-next-extended-danang-2025",
+  "description": "A project for Cloud Next Extended Da Nang 2025",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.10.1"
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.10.1",
+    "tailwindcss": "^4.1.11"
   }
 }

@@ -1,0 +1,256 @@
+---
+export interface Props {
+	position?: 'floating' | 'inline';
+	size?: 'small' | 'medium' | 'large';
+}
+
+const { position = 'floating', size = 'medium' } = Astro.props;
+---
+
+<button 
+	id="theme-toggle" 
+	aria-label="Toggle dark mode" 
+	class={`theme-toggle ${position === 'floating' ? 'floating' : 'inline'} ${size}`}
+>
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun-icon">
+		<circle cx="12" cy="12" r="5"></circle>
+		<line x1="12" y1="1" x2="12" y2="3"></line>
+		<line x1="12" y1="21" x2="12" y2="23"></line>
+		<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+		<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+		<line x1="1" y1="12" x2="3" y2="12"></line>
+		<line x1="21" y1="12" x2="23" y2="12"></line>
+		<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+		<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon-icon">
+		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+	</svg>
+</button>
+
+<script>
+	function initTheme() {
+		const themeToggle = document.getElementById('theme-toggle');
+		
+		function updateThemeIcons() {
+			const isDark = document.documentElement.classList.contains('dark');
+			const sunIcon = document.querySelector('#theme-toggle .sun-icon') as HTMLElement;
+			const moonIcon = document.querySelector('#theme-toggle .moon-icon') as HTMLElement;
+			
+			if (sunIcon && moonIcon) {
+				if (isDark) {
+					// In dark mode, show sun icon (to switch to light)
+					sunIcon.style.display = 'block';
+					moonIcon.style.display = 'none';
+				} else {
+					// In light mode, show moon icon (to switch to dark)
+					sunIcon.style.display = 'none';
+					moonIcon.style.display = 'block';
+				}
+			}
+		}
+		
+		// Check for saved theme preference or use preferred color scheme
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme === 'dark') {
+			document.documentElement.classList.add('dark');
+		} else if (savedTheme === 'light') {
+			document.documentElement.classList.remove('dark');
+		} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			document.documentElement.classList.add('dark');
+		}
+		
+		// Update icons based on initial theme
+		updateThemeIcons();
+		
+		// Toggle theme when button is clicked
+		if (themeToggle) {
+			themeToggle.addEventListener('click', () => {
+				if (document.documentElement.classList.contains('dark')) {
+					document.documentElement.classList.remove('dark');
+					localStorage.setItem('theme', 'light');
+				} else {
+					document.documentElement.classList.add('dark');
+					localStorage.setItem('theme', 'dark');
+				}
+				updateThemeIcons();
+			});
+		}
+	}
+
+	// Initialize on page load
+	document.addEventListener('DOMContentLoaded', initTheme);
+	
+	// Initialize on Astro navigation
+	document.addEventListener('astro:after-swap', initTheme);
+	
+	// Run immediately in case DOMContentLoaded already fired
+	initTheme();
+</script>
+
+<style>
+	/* CSS Variables for Light and Dark Themes */
+	:root {
+		/* Light theme variables */
+		--toggle-bg: #ffffff;
+		--toggle-border: #e5e7eb;
+		--toggle-text: #1f2937;
+		--toggle-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		--toggle-hover-bg: #f9fafb;
+	}
+
+	:root.dark,
+	[data-theme="dark"] {
+		/* Dark theme variables */
+		--toggle-bg: #374151;
+		--toggle-border: #4b5563;
+		--toggle-text: #f9fafb;
+		--toggle-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+		--toggle-hover-bg: #4b5563;
+	}
+
+	/* Support for dark class on html/body */
+	.dark {
+		--toggle-bg: #374151;
+		--toggle-border: #4b5563;
+		--toggle-text: #f9fafb;
+		--toggle-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+		--toggle-hover-bg: #4b5563;
+	}
+
+	/* Base theme toggle button styles */
+	.theme-toggle {
+		border-radius: 50%;
+		background-color: var(--toggle-bg);
+		border: 1px solid var(--toggle-border);
+		box-shadow: var(--toggle-shadow);
+		color: var(--toggle-text);
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.3s ease;
+		backdrop-filter: blur(8px);
+		position: relative;
+	}
+
+	.theme-toggle:hover {
+		background-color: var(--toggle-hover-bg);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.15);
+	}
+
+	.dark .theme-toggle:hover {
+		box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.4);
+	}
+
+	.theme-toggle:focus {
+		outline: 2px solid #3b82f6;
+		outline-offset: 2px;
+	}
+
+	.theme-toggle:active {
+		transform: translateY(0);
+	}
+
+	/* Floating positioning */
+	.theme-toggle.floating {
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		z-index: 50;
+	}
+
+	/* Inline positioning */
+	.theme-toggle.inline {
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Size variations */
+	.theme-toggle.small {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.theme-toggle.small svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.theme-toggle.medium {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	.theme-toggle.medium svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.theme-toggle.large {
+		width: 3.5rem;
+		height: 3.5rem;
+	}
+
+	.theme-toggle.large svg {
+		width: 24px;
+		height: 24px;
+	}
+
+	/* Theme toggle icons */
+	.theme-toggle svg {
+		position: absolute;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+	}
+
+	/* Default state - both icons hidden initially, JS will show appropriate one */
+	.theme-toggle .sun-icon,
+	.theme-toggle .moon-icon {
+		display: none;
+	}
+
+	/* Responsive adjustments for floating button */
+	@media (max-width: 768px) {
+		.theme-toggle.floating {
+			bottom: 1.5rem;
+			right: 1.5rem;
+		}
+		
+		.theme-toggle.floating.large {
+			width: 3rem;
+			height: 3rem;
+		}
+		
+		.theme-toggle.floating.large svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	/* Media query for system dark mode preference */
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) {
+			--toggle-bg: #374151;
+			--toggle-border: #4b5563;
+			--toggle-text: #f9fafb;
+			--toggle-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+			--toggle-hover-bg: #4b5563;
+		}
+	}
+
+	/* Accessibility: Reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.theme-toggle {
+			transition: none !important;
+		}
+		
+		.theme-toggle:hover {
+			transform: none !important;
+		}
+		
+		.theme-toggle svg {
+			transition: none !important;
+		}
+	}
+</style>

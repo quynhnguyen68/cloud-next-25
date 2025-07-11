@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-Medium.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GoogleSans';
+    src: url('/fonts/GoogleSans-MediumItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+:root {
+    /* Light theme variables */
+    --bg-color: #ffffff;
+    --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    --text-color: #1f2937;
+    --text-secondary: #6b7280;
+    --text-accent: #3b82f6;
+    --card-bg: #f9fafb;
+    --card-border: #e5e7eb;
+    --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --button-hover: #374151;
+    --google-text-color: #4285f4;
+    --cloud-text-color: #34a853;
+    --glow-effect: 0 0 20px rgba(59, 130, 246, 0.15);
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+    --color-green: #34a752;
+    --color-blue: #4184f2;
+    --color-red: #ea4336;
+    --color-yellow: #faab00;
+    --color-pink: #ff7daf;
+    --color-light-green: #d8f8d3;
+    --color-light-blue: #c3ecf6;
+    --color-light-pink: #f8d8d8;
+    --color-light-yellow: #ffe7a5;
+    --color-lighter-yellow: #fffaeb;
+}
+
+:root.dark,
+[data-theme="dark"] {
+    /* Dark theme variables */
+    --bg-color: #0f172a;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --text-color: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-accent: #60a5fa;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --button-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --button-hover: #e2e8f0;
+    --google-text-color: #60a5fa;
+    --cloud-text-color: #4ade80;
+    --glow-effect: 0 0 30px rgba(96, 165, 250, 0.2);
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+/* Support for dark class on html/body */
+.dark {
+    --bg-color: #0f172a;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --text-color: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-accent: #60a5fa;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --button-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --button-hover: #e2e8f0;
+    --google-text-color: #fff;
+    --cloud-text-color: #4ade80;
+    --glow-effect: 0 0 30px rgba(96, 165, 250, 0.2);
+}
+
+html {
+    font-family: 'GoogleSans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    @apply bg-gray-50 text-gray-900 transition-colors duration-300;
+}
+
+.dark body {
+    @apply bg-gray-900 text-gray-100;
+}
+
+.dark code {
+    @apply bg-gray-800 text-gray-200;
+}
+
+.btn-primary {
+    border-radius: 40px;
+    text-align: center;
+    @apply bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200;
+}
+
+.dark .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-600;
+}
+
+a, a:visited, a:hover, a:focus, a:active {
+    @apply text-gray-900 no-underline hover:text-blue-600 transition-colors duration-200;
+}
+
+.dark a, .dark a:visited, .dark a:hover, .dark a:focus, .dark a:active {
+    @apply text-gray-100 hover:text-blue-400;
+}
+
+.box-frame {
+    border-radius: 1rem;
+    @apply border-2 border-gray-900 bg-white;
+    box-shadow: 2px 2px #000,2px 2px #000,3px 3px #000,4px 4px #000,5px 5px #000,6px 6px #000,7px 7px #000,8px 8px #000,9px 9px #000,10px 10px #000;
+}
+
+.dark .box-frame {
+    @apply border-gray-300 bg-gray-800;
+    box-shadow: 2px 2px #374151,2px 2px #374151,3px 3px #374151,4px 4px #374151,5px 5px #374151,6px 6px #374151,7px 7px #374151,8px 8px #374151,9px 9px #374151,10px 10px #374151;
+}

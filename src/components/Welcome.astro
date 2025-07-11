@@ -1,47 +1,198 @@
 ---
-import astroLogo from '../assets/astro.svg';
-import background from '../assets/background.svg';
+import nextLogo from '../assets/next-logo.png';
+import bridgeLogo from '../assets/bridge.png';
+import googleCloudLogo from '../assets/cloud.png';
 ---
 
 <div id="container">
-	<img id="background" src={background.src} alt="" fetchpriority="high" />
+	<div class="blur-cloud cloud-1"></div>
+	<div class="blur-cloud cloud-2"></div>
+	<div class="blur-cloud cloud-3"></div>
 	<main>
-		<section id="hero">
-			<a href="https://astro.build"
-				><img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" /></a
-			>
-			<h1>
-				To get started, open the <code><pre>src/pages</pre></code> directory in your project.
-			</h1>
-			<section id="links">
-				<a class="button" href="https://docs.astro.build">Read our docs</a>
-				<a href="https://astro.build/chat"
-					>Join our Discord <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"
-						><path
-							fill="currentColor"
-							d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"
-						></path></svg
-					>
-				</a>
-			</section>
-		</section>
-	</main>
+		<img id="cloud-logo" src={googleCloudLogo.src} alt="Google Cloud logo" />
+		<p id="google-text">Google Cloud</p>
+		<img id="bridge-logo" src={bridgeLogo.src} alt="Bridge logo" />
+		<img id="next-logo" src={nextLogo.src} alt="Next logo" />
 
-	<a href="https://astro.build/blog/astro-5/" id="news" class="box">
-		<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"
-			><path
-				d="M24.667 12c1.333 1.414 2 3.192 2 5.334 0 4.62-4.934 5.7-7.334 12C18.444 28.567 18 27.456 18 26c0-4.642 6.667-7.053 6.667-14Zm-5.334-5.333c1.6 1.65 2.4 3.43 2.4 5.333 0 6.602-8.06 7.59-6.4 17.334C13.111 27.787 12 25.564 12 22.666c0-4.434 7.333-8 7.333-16Zm-6-5.333C15.111 3.555 16 5.556 16 7.333c0 8.333-11.333 10.962-5.333 22-3.488-.774-6-4-6-8 0-8.667 8.666-10 8.666-20Z"
-				fill="#111827"></path></svg
-		>
-		<h2>What's New in Astro 5.0?</h2>
-		<p>
-			From content layers to server islands, click to learn more about the new features and
-			improvements in Astro 5.0
-		</p>
-	</a>
+		<p>Saturday, July 26, 2025 – 13:00 PM to 17:30 PM (GMT+7)</p>
+		<p>Maximilan Hotel, 222 Võ Nguyên Giáp, Sơn Trà, Đà Nẵng</p>
+
+		<button>Register now</button>
+	</main>
 </div>
 
 <style>
+	#container {
+		height: 100%;
+		background: var(--bg-gradient);
+		color: var(--text-color);
+		transition: all var(--transition-speed) ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.blur-cloud {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(60px);
+		opacity: 0.4;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	.cloud-1 {
+		width: 350px;
+		height: 350px;
+		background-color: rgba(59, 130, 246, 0.15); /* Google blue */
+		top: 15%;
+		left: 10%;
+		animation: floatCloud 18s ease-in-out infinite;
+	}
+
+	.cloud-2 {
+		width: 400px;
+		height: 400px;
+		background-color: rgba(234, 67, 53, 0.08); /* Google red */
+		bottom: 10%;
+		right: 15%;
+		animation: floatCloud 22s ease-in-out infinite alternate;
+	}
+
+	.cloud-3 {
+		width: 300px;
+		height: 300px;
+		background-color: rgba(52, 168, 83, 0.1); /* Google green */
+		top: 60%;
+		left: 20%;
+		animation: floatCloud 25s ease-in-out infinite 5s;
+	}
+
+	@keyframes floatCloud {
+		0%, 100% { transform: translateY(0) translateX(0); }
+		25% { transform: translateY(-40px) translateX(20px); }
+		50% { transform: translateY(-15px) translateX(-20px); }
+		75% { transform: translateY(-30px) translateX(10px); }
+	}
+
+	/* Add subtle animated background pattern */
+	#container::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(234, 67, 53, 0.05) 0%, transparent 50%),
+			radial-gradient(circle at 40% 80%, rgba(52, 168, 83, 0.05) 0%, transparent 50%);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+	/* Google and Cloud text styling */
+	#google-text {
+		position: absolute;
+		top: calc(50% - 300px);
+		left: calc(50% - 200px);
+		font-size: 40px;
+		font-weight: 700;
+		z-index: 3;
+		color: #fff;
+		text-shadow: var(--glow-effect);
+		transition: all var(--transition-speed) ease;
+		letter-spacing: -0.02em;
+	}
+
+	#google-text:hover {
+		transform: scale(1.05);
+		text-shadow: var(--glow-effect), 0 0 40px rgba(66, 133, 244, 0.3);
+	}
+
+	@keyframes float {
+		0% { transform: translateY(0) rotate(0deg); }
+		33% { transform: translateY(-12px) rotate(1deg); }
+		66% { transform: translateY(-6px) rotate(-1deg); }
+		100% { transform: translateY(0) rotate(0deg); }
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.8; }
+	}
+
+	#next-logo {
+		width: 50%;
+		max-width: 650px;
+		transition: all var(--transition-speed) ease;
+		filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+	}
+
+	#next-logo:hover {
+		filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
+	}
+
+	/* Enhanced dark theme image adjustments */
+	.dark #next-logo {
+		filter: brightness(0.95) contrast(1.1) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+	}
+
+	.dark #next-logo:hover {
+		filter: brightness(1) contrast(1.1) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
+	}
+
+	.dark #cloud-logo {
+		filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+	}
+
+	.dark #bridge-logo {
+		filter: brightness(1.05) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+	}
+
+	#bridge-logo {
+		width: 10%;
+		min-height: 100px;
+		height: auto;
+		position: absolute;
+		top: calc(50% - 270px);
+		right: calc(50% - 320px);
+		z-index: 2;
+		animation: float 4s ease-in-out infinite;
+		transition: all var(--transition-speed) ease;
+		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+	}
+
+	#bridge-logo:hover {
+		animation-play-state: paused;
+		transform: scale(1.1);
+	}
+
+	#cloud-logo {
+		width: 5%;
+		height: auto;
+		position: absolute;
+		top: calc(50% - 300px);
+		left: calc(50% - 360px);
+		z-index: 2;
+		transition: all var(--transition-speed) ease;
+		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+		animation: pulse 3s ease-in-out infinite;
+	}
+
+	#cloud-logo:hover {
+		transform: scale(1.15);
+		animation-play-state: paused;
+	}
+
 	#background {
 		position: fixed;
 		top: 0;
@@ -49,11 +200,9 @@ import background from '../assets/background.svg';
 		width: 100%;
 		height: 100%;
 		z-index: -1;
-		filter: blur(100px);
 	}
 
 	#container {
-		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
 		height: 100%;
 	}
 
@@ -61,120 +210,24 @@ import background from '../assets/background.svg';
 		height: 100%;
 		display: flex;
 		justify-content: center;
-	}
-
-	#hero {
-		display: flex;
-		align-items: start;
-		flex-direction: column;
-		justify-content: center;
-		padding: 16px;
-	}
-
-	h1 {
-		font-size: 22px;
-		margin-top: 0.25em;
-	}
-
-	#links {
-		display: flex;
-		gap: 16px;
-	}
-
-	#links a {
-		display: flex;
-		align-items: center;
-		padding: 10px 12px;
-		color: #111827;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
-
-	#links a:hover {
-		color: rgb(78, 80, 86);
-	}
-
-	#links a svg {
-		height: 1em;
-		margin-left: 8px;
-	}
-
-	#links a.button {
-		color: white;
-		background: linear-gradient(83.21deg, #3245ff 0%, #bc52ee 100%);
-		box-shadow:
-			inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-			inset 0 -2px 0 rgba(0, 0, 0, 0.24);
-		border-radius: 10px;
-	}
-
-	#links a.button:hover {
-		color: rgb(230, 230, 230);
-		box-shadow: none;
-	}
-
-	pre {
-		font-family:
-			ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono',
-			monospace;
-		font-weight: normal;
-		background: linear-gradient(14deg, #d83333 0%, #f041ff 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		margin: 0;
+		position: relative;
+		z-index: 1;
 	}
 
 	h2 {
 		margin: 0 0 1em;
-		font-weight: normal;
-		color: #111827;
-		font-size: 20px;
+		font-weight: 600;
+		color: var(--text-color);
+		font-size: 22px;
+		letter-spacing: -0.01em;
 	}
 
 	p {
-		color: #4b5563;
+		color: var(--text-secondary);
 		font-size: 16px;
-		line-height: 24px;
+		line-height: 1.6;
 		letter-spacing: -0.006em;
 		margin: 0;
-	}
-
-	code {
-		display: inline-block;
-		background:
-			linear-gradient(66.77deg, #f3cddd 0%, #f5cee7 100%) padding-box,
-			linear-gradient(155deg, #d83333 0%, #f041ff 18%, #f5cee7 45%) border-box;
-		border-radius: 8px;
-		border: 1px solid transparent;
-		padding: 6px 8px;
-	}
-
-	.box {
-		padding: 16px;
-		background: rgba(255, 255, 255, 1);
-		border-radius: 16px;
-		border: 1px solid white;
-	}
-
-	#news {
-		position: absolute;
-		bottom: 16px;
-		right: 16px;
-		max-width: 300px;
-		text-decoration: none;
-		transition: background 0.2s;
-		backdrop-filter: blur(50px);
-	}
-
-	#news:hover {
-		background: rgba(255, 255, 255, 0.55);
-	}
-
-	@media screen and (max-height: 368px) {
-		#news {
-			display: none;
-		}
 	}
 
 	@media screen and (max-width: 768px) {
@@ -187,6 +240,29 @@ import background from '../assets/background.svg';
 			display: block;
 			padding-top: 10%;
 		}
+
+		/* #next-logo {
+			max-height: 50%;
+			max-width: 90%;
+		}
+
+		#bridge-logo {
+			width: 35%;
+			top: calc(50% - (0.5 * 90% / 2) - 5%);
+			right: calc(50% - (0.9 * 90% / 2) - 2%);
+		}
+
+		#google-text {
+			top: calc(50% - (0.5 * 50% / 2) - 15%);
+			left: calc(50% - (0.9 * 90% / 2) + 5%);
+			font-size: 12px;
+		}
+
+		#cloud-text {
+			top: calc(50% - (0.5 * 50% / 2) - 10%);
+			left: calc(50% - (0.9 * 90% / 2) + 5%);
+			font-size: 12px;
+		} */
 
 		#links {
 			flex-wrap: wrap;
@@ -205,6 +281,36 @@ import background from '../assets/background.svg';
 
 		h1 {
 			line-height: 1.5;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#bridge-logo,
+		#cloud-logo,
+		#container::before {
+			animation: none;
+		}
+		
+		* {
+			transition: none !important;
+		}
+	}
+
+	/* Enhanced media query for system dark mode preference */
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) {
+			--bg-color: #0f172a;
+			--bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+			--text-color: #f1f5f9;
+			--text-secondary: #94a3b8;
+			--text-accent: #60a5fa;
+			--card-bg: #1e293b;
+			--card-border: #334155;
+			--button-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+			--button-hover: #e2e8f0;
+			--google-text-color: #60a5fa;
+			--cloud-text-color: #4ade80;
+			--glow-effect: 0 0 30px rgba(96, 165, 250, 0.2);
 		}
 	}
 </style>

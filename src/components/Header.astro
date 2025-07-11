@@ -1,0 +1,182 @@
+---
+import gdgLogo from '../assets/gdg-cloud-dn.png';
+---
+<script>
+    function init() {
+        const button = document.querySelector('.btn-menu');
+        const icon = document.querySelector('#nav-icon');
+        const menuPopup = document.querySelector('#navbar-default');
+
+        if (button && icon && menuPopup) {
+            button.addEventListener('click', () => {
+                icon.classList.toggle('open');
+
+                if (menuPopup.classList.contains('hidden')) {
+                    menuPopup.classList.remove('hidden');
+                    menuPopup.classList.add('absolute');
+
+                    return;
+                }
+
+                menuPopup.classList.add('hidden');
+                menuPopup.classList.remove('absolute');
+            });
+        }
+    }
+
+    document.addEventListener("astro:after-swap", init);
+    init();
+</script>
+
+<header class="header flex items-center sm:px-8 px-2 justify-between transition-colors duration-300">
+	<div class="header-logo">
+        <a href="/"><img class="sm:h-16 h-12" src={gdgLogo.src} /></a>
+	</div>
+
+    <nav>
+        <!-- <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:p-0">
+            <button type="button" class="btn-menu md:hidden inline-flex items-center justify-center">
+                <div id="nav-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="hidden md:flex md:w-auto w-full top-10 right-0 p-2" id="navbar-default">
+              <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+                <li class="md:p-0 p-2">
+                  <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="md:p-0 p-2">
+                    <a href="/badge" class="nav-link">Badge</a>
+                </li>
+              </ul>
+            </div>
+        </div> -->
+    </nav>
+</header>
+
+<style>
+    /* CSS Variables for Light Theme */
+    :root {
+        --header-bg: #ffffff;
+        --header-border: #e5e7eb;
+        --header-text: #1f2937;
+        --header-text-hover: #2563eb;
+        --nav-bg: #ffffff;
+        --nav-border: #e5e7eb;
+        --button-bg-hover: #f3f4f6;
+        --hamburger-color: #1f2937;
+        --logo-filter: none;
+    }
+
+	.header {
+		height: 60px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 100;
+        background-color: var(--header-bg);
+        border-bottom: 1px solid var(--header-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+	}
+
+    .header-logo img {
+        height: 50px;
+        filter: var(--logo-filter);
+        transition: filter 0.3s ease;
+    }
+
+    /* Navigation links styling */
+    .nav-link {
+        color: var(--header-text);
+        transition: color 0.2s ease;
+        text-decoration: none;
+    }
+
+    .nav-link:hover {
+        color: var(--header-text-hover);
+    }
+
+    /* Navigation menu styling */
+    #navbar-default ul {
+        background-color: var(--nav-bg);
+        border-color: var(--nav-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Hamburger menu icon styling */
+    #nav-icon {
+        width: 30px;
+        height: 24px;
+        position: relative;
+        transform: rotate(0deg);
+        transition: 0.5s ease-in-out;
+        cursor: pointer;
+    }
+
+    #nav-icon span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: var(--hamburger-color);
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: 0.25s ease-in-out;
+    }
+
+    #nav-icon span:nth-child(1) {
+        top: 0px;
+    }
+
+    #nav-icon span:nth-child(2) {
+        top: 12px;
+    }
+
+    #nav-icon span:nth-child(3) {
+        top: 24px;
+    }
+
+    #nav-icon.open span:nth-child(1) {
+        top: 12px;
+        transform: rotate(135deg);
+    }
+
+    #nav-icon.open span:nth-child(2) {
+        opacity: 0;
+        left: -10px;
+    }
+
+    #nav-icon.open span:nth-child(3) {
+        top: 12px;
+        transform: rotate(-135deg);
+    }
+
+    /* Mobile menu styling */
+    @media (max-width: 768px) {
+        #navbar-default {
+            background-color: var(--nav-bg);
+            border: 1px solid var(--nav-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    /* Accessibility: Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            transition: none !important;
+        }
+        
+        #nav-icon {
+            transition: none !important;
+        }
+        
+        #nav-icon span {
+            transition: none !important;
+        }
+    }
+</style>
